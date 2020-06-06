@@ -22,6 +22,12 @@ class Home extends Component {
         showProfileForm: false,      
     }
 }
+
+resetshowProfileForm=()=>{
+    this.setState({
+        showProfileForm: false, 
+    });
+}
     handleLogout=()=>{
         localStorage.removeItem('access_token');
         localStorage.clear();
@@ -43,7 +49,7 @@ class Home extends Component {
             return <Redirect to = '/login' / > ;      
           }
           if(this.state.showProfileForm){
-              return <EditProfile userProfile={userProfile}/>
+              return <EditProfile userProfile={userProfile} resetshowProfileForm={this.resetshowProfileForm}/>
           }
         return (
             <div>

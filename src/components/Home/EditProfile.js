@@ -12,6 +12,7 @@ import {
 } from 'react-router-dom';
 import { connect} from 'react-redux';
 import {setRegistration } from '../../actions/registrationAction';
+import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined';
 
 const EditProfile = (props) => {
     const userProfile = props.userProfile    
@@ -30,6 +31,8 @@ const EditProfile = (props) => {
     const [errorName, setErrorName] = useState(false);
     const [errorUserName, setErrorUserName] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const[hideForm,setHideForm]=useState(false)
+
 
     const handleNameChange = (evt) => {
         setIsButtonDisabled(true);
@@ -149,6 +152,9 @@ const EditProfile = (props) => {
         }
         props.setRegistration(data);
     };
+    const goBack = ()=>{
+        props.resetshowProfileForm();      
+    }    
 
     if (gotoLogin) {
         return <Redirect to='/login' />;
@@ -177,6 +183,7 @@ const EditProfile = (props) => {
                             </div>
                             <div></div>
                             <h1 className='text-style'>Edit Profile </h1>
+                            <a className= 'myPointer' onClick={goBack}><ArrowBackOutlinedIcon/></a>
                             <form
                                 className='login-form'
                                 onSubmit={onFormSubmit}>
