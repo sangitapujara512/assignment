@@ -1,9 +1,10 @@
 import { all, fork, call, put } from 'redux-saga/effects';
-import test from './watchers/testSaga'
+
+import workerGetRegistrationSaga from './';
 
 function* root() {
-    yield all([
-        fork(test),
+    yield all([        
+        fork(workerGetRegistrationSaga),
     ]);
 }
 

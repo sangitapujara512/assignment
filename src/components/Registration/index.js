@@ -1,23 +1,22 @@
 import React, {
-    useState
+    useState,    
   } from 'react'
-//   import {
-//     useToasts
-//   } from 'react-toast-notifications';
   
   import {
     Button
   } from '@material-ui/core';
   import Grid from '@material-ui/core/Grid';
   import Container from '@material-ui/core/Container';
-//   import 'font-awesome/css/font-awesome.min.css';
   import '../Login/style.css';
   import {
     Redirect,
     Link as Link,
   } from 'react-router-dom';
+  import { connect ,useDispatch } from 'react-redux';
+  import { getRegistrationSaga ,setRegistration} from '../../actions/registrationAction';
   
-  const Registration = () => {
+  const Registration = (props) => {
+    const dispatch = useDispatch();
       const [name,setName]=useState('');
       const [username,setUsername]=useState('');
       const [email, setEmail] = useState('');
@@ -34,13 +33,10 @@ import React, {
       const [errorContactNumber,setErrorContactNumber]=useState(false);
       const [errorName,setErrorName]=useState(false);
       const [errorUserName,setErrorUserName]=useState(false);
-  
-  
-    //   const {
-    //     addToast
-    //   } = useToasts();
+      const [isButtonDisabled,setIsButtonDisabled]=useState(true);
 
     const handleNameChange = (evt) => {
+        setIsButtonDisabled(true);
         const val = evt.target.value;
         setName(
           evt.target.value
@@ -48,13 +44,16 @@ import React, {
         if (val.length < 2) {
           setErrorName(true);
           setBorderStyle('1px solid red');
+          setIsButtonDisabled(true);
         } else if (val.length > 1) {
             setErrorName(false);
           setBorderStyle('1px solid #339CFF');
+          setIsButtonDisabled(false);
         }
       };
   
       const handleEmailChange = (evt) => {
+        setIsButtonDisabled(true);
         const val = evt.target.value;
         setEmail(
           evt.target.value
@@ -62,12 +61,15 @@ import React, {
         if (val.length < 2) {
           setErrorLoginId(true);
           setBorderStyle('1px solid red');
+          setIsButtonDisabled(true);
         } else if (val.length > 1) {
           setErrorLoginId(false);
           setBorderStyle('1px solid #339CFF');
+          setIsButtonDisabled(false);
         }
       };
       const handleUserNameChange = (evt) => {
+        setIsButtonDisabled(true);
         const val = evt.target.value;
         setUsername(
           evt.target.value
@@ -75,13 +77,16 @@ import React, {
         if (val.length < 2) {
             setErrorUserName(true);
           setBorderStyle('1px solid red');
+          setIsButtonDisabled(true);
         } else if (val.length > 1) {
             setErrorUserName(false);
           setBorderStyle('1px solid #339CFF');
+          setIsButtonDisabled(false);
         }
       };
 
       const handleContactNumberChange = (evt) => {
+        setIsButtonDisabled(true);
         const val = evt.target.value;
   
         SetContactNumber(
@@ -90,12 +95,15 @@ import React, {
         if (val.length < 10) {
             setErrorContactNumber(true);
           setBorderStyle('1px solid red');
+          setIsButtonDisabled(true);
         } else if (val.length > 1) {
             setErrorContactNumber(false);
           setBorderStyle('1px solid #339CFF');
+          setIsButtonDisabled(false);
         }
       };
       const handleFullNameChange = (evt) => {
+        setIsButtonDisabled(true);
         const val = evt.target.value;
   
         setFullName(
@@ -104,13 +112,16 @@ import React, {
         if (val.length < 2) {
           setErrorFullName(true);
           setBorderStyle('1px solid red');
+          setIsButtonDisabled(true);
         } else if (val.length > 1) {
           setErrorFullName(false);
           setBorderStyle('1px solid #339CFF');
+          setIsButtonDisabled(false);
         }
       };
   
       const handlePasswordChange = (evt) => {
+        setIsButtonDisabled(true);
         setConfirmPassword('');
         const val = evt.target.value;
         setPassword(
@@ -120,14 +131,17 @@ import React, {
         if (val.length < 8) {
           setErrorPassword(true);
           setBorderStyle('1px solid red');
+          setIsButtonDisabled(true);
         }
         if (val.length >= 8) {
           setErrorPassword(false);
           setBorderStyle('1px solid #339CFF');
+          setIsButtonDisabled(false);
         }
       };
   
       const handleConfirmPasswordChange = (evt) => {
+        setIsButtonDisabled(true);
         const val = evt.target.value;
         setConfirmPassword(
           evt.target.value,
@@ -135,10 +149,12 @@ import React, {
         if (val !== password) {
           setErrorConfirmPassword(true);
           setBorderStyle('1px solid red');
+          setIsButtonDisabled(true);
         }
         if (val === password) {
           setErrorConfirmPassword(false);
           setBorderStyle('1px solid #339CFF');
+          setIsButtonDisabled(false);
         }
   
       };
@@ -146,10 +162,15 @@ import React, {
       const onFormSubmit = (e) => {
         e.preventDefault();
         setGoToLogin(true);
-        // addToast("Your account is Set up!", {
-        //   appearance: 'success',
-        //   autoDismiss: true,
-        // })
+         
+        const data={
+            firstName: name,
+            phoneNumber: contactNumber,
+            email: email,
+            userName: username,
+            passWord:password
+        }        
+        props.setRegistration(data);
       };
   
   
@@ -176,12 +197,10 @@ import React, {
               component='main'
               maxWidth='xs'
               className='align-center'>
-              {/* <CssBaseline /> */}
+              
               <div className='paper'>
                 <div className='logoContainer'>
-                  {/* <Link href='/'>
-                    <img src={Logo} alt='logo' />
-                  </Link> */}
+                  
                 </div>
                 <div></div>
                 <h1 className='text-style'>Registration </h1>
@@ -189,7 +208,7 @@ import React, {
                 <form
                   className='login-form'
                   onSubmit={onFormSubmit}>
-                  {/* <label className='alignLeft'>Enter your email to get Started</label><br></br> */}
+                 
                   <input
                     required
                     fullwidth='true'
@@ -213,7 +232,7 @@ import React, {
                   
                   <br />
                   <br />
-                  {/* <label className='alignLeft'>Enter your Full Name</label><br></br> */}
+                  
                   <input
                     required
                     fullwidth='true'
@@ -263,7 +282,7 @@ import React, {
                   
                   <br />
                   <br />
-                  {/* <label className='alignLeft'>Enter your email to get Started</label><br></br> */}
+                 
                   <input
                     required
                     fullwidth='true'
@@ -288,7 +307,7 @@ import React, {
                   <br />
                   <br />
 
-                  {/* <label className='alignLeft'>Choose a password with atleast 8 characters</label><br></br> */}
+                 
                   <input
                     variant='outlined'
                     required
@@ -307,8 +326,7 @@ import React, {
                   <br />
                   <br />
 
-                  {/* *** */}
-                   {/* <label className='alignLeft'>Confirm Pasword</label><br></br> */}
+                  
                   <input
                     variant='outlined'
                     required
@@ -338,6 +356,7 @@ import React, {
                       color='primary'
                       type='submit'
                       onClick={onFormSubmit}
+                      disabled={isButtonDisabled}
                       
                       className = 'setColor' >
                       Submit
@@ -355,24 +374,25 @@ import React, {
                 </form>
               </div>
             </Container>
-          </Grid>
-          {/* <Hidden mdDown>
-            <Grid
-              item
-              lg={7}
-              md={12}
-              className='MuiContainer-root align-center img-set set-border full-height'
-              style={{ backgroundImage: `url(${loginimgg})` }}
-            />
-          </Hidden> */}
+          </Grid>          
         </Grid>
-        <Grid>
-          {/* <Footer /> */}
+        <Grid>          
         </Grid>
       </Grid>
       )
       
   }
   
-  export default Registration;
+  const mapStateToProps = (state) => ({
+  registration: [state.registrationReducer],
+  
+});
+const mapDispatchToProps = (dispatch) => ({  
+    setRegistration: (registration)=>
+    dispatch(setRegistration(registration)),  
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Registration);
   

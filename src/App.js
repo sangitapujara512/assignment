@@ -16,12 +16,14 @@ import Home from './components/Home'
 import Registration from './components/Registration'
 
 function App() {
+  const token = localStorage.getItem('access_token');    
   return (
     <Provider store={store}>
       {/* <ConnectedRouter history={history}> */}
     <div className="App">
       {/* <header className="App-header"> */}
       <BrowserRouter>
+      {!token && <Redirect to='/login' />}
       <Route path='/' exact component={Home} />
       <Route path='/login' exact component={Login} />
       <Route path='/registration' exact component={Registration} />

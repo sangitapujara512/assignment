@@ -6,20 +6,11 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import { withToastManager } from 'react-toast-notifications';
-
 import { Link, Button } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-// import 'font-awesome/css/font-awesome.min.css';
  import './style.css';
 import Hidden from '@material-ui/core/Hidden';
-// import { authorize } from '../../actions/authAction';
-// import loginimgg from '../../assets/Login/login.jpeg';
-// import Footer from '../Footer';
-// import CircularProgressBar from '../../components/Shared/spanLoader';
-// import Logo from '../../assets/Logo/logo.png';
-// import ResetPassword from '../ResetPassword';
 
 class Login extends PureComponent {
   constructor(props) {
@@ -27,9 +18,8 @@ class Login extends PureComponent {
     this.state = {
       email: '',
       password: '',
-      isButtonDisabled: false,
-      showRegistration: false,
-    //   showResetPassword: false,
+      isButtonDisabled: true,
+      showRegistration: false,    
     errorLoginId: false,
       errorPassword: false,
       borderStyle: '1px solid #339CFF',
@@ -46,13 +36,15 @@ class Login extends PureComponent {
     if (val.length < 2) {
       this.setState({
         errorLoginId: true,
-        borderStyle: '1px solid red'
+        borderStyle: '1px solid red',
+        isButtonDisabled: true,
       });
 
     } else if (val.length > 1) {
       this.setState({
         errorLoginId: false,
-        borderStyle: '1px solid #339CFF'
+        borderStyle: '1px solid #339CFF',
+        isButtonDisabled: false,
       });
     }
   };
@@ -62,13 +54,15 @@ class Login extends PureComponent {
     if (val.length < 8) {
       this.setState({
         errorPassword: true,
-        borderStyle: '1px solid red'
+        borderStyle: '1px solid red',
+        isButtonDisabled: true,
       });
     }
     if (val.length >= 8) {
       this.setState({
         errorPassword: false,
-        borderStyle: '1px solid #339CFF'
+        borderStyle: '1px solid #339CFF',
+        isButtonDisabled: false,
       });
     }
     this.setState({
@@ -80,11 +74,9 @@ class Login extends PureComponent {
     const { authorize } = this.props;
     e.preventDefault();
     const login = this.login.value;
-    const password = this.password.value;
-    // authorize(login, password);
+    const password = this.password.value;    
     this.setState({
-      password: '',
-    //   isButtonDisabled: true,
+      password: '', 
 
     });
     localStorage.setItem('access_token', true);
@@ -95,43 +87,6 @@ class Login extends PureComponent {
       showRegistration: true,
     });
   };
-
-//   componentDidUpdate(prevProps) {
-//     if (
-//       this.state.isButtonDisabled &&
-//       this.props.error !== prevProps.error
-//     ) {
-//       // condition added to check with prevProps value and showing current props value
-//       if (this.props.error) {
-//         prevProps.toastManager.add(this.props.error, {
-//           appearance: 'error',
-//           autoDismiss: true,
-//         });
-//         this.setState({
-//           isButtonDisabled: false,
-//         });
-//         if (this.props.error === 'Password Generated') {
-//           this.setState({
-//             showResetPassword: true,
-//           });
-//         }
-//       }
-//     }
-//     if (
-//       this.props.password[0].password !==
-//       prevProps.password[0].password
-//     ) {
-//       if (
-//         this.props.password[0].password &&
-//         this.props.password[0].password.status === 200
-//       ) {
-//         this.setState({
-//           showResetPassword: false,
-//         });
-//       }
-//     }
-//   }
-
   render() {
     const {
         errorLoginId,
@@ -145,10 +100,7 @@ class Login extends PureComponent {
     }
     if (this.state.showRegistration) {
       return <Redirect to='/Registration' />;
-    }
-    // // if (this.state.showResetPassword) {
-    // //   return <ResetPassword />;
-    // // }
+    }    
     return (
       <Grid>
         <Grid
@@ -170,10 +122,7 @@ class Login extends PureComponent {
               className='align-center'>
               <CssBaseline />
               <div className='paper'>
-                <div className='logoContainer'>
-                  {/* <Link href='/'>
-                    <img src={Logo} alt='logo' />
-                  </Link> */}
+                <div className='logoContainer'>                  
                 </div>
                 <div></div>
                 <h1 className='text-style'>Log In </h1>
@@ -197,7 +146,7 @@ class Login extends PureComponent {
                   
                   <br />
                   {
-                    errorLoginId && <div className='errorText'> User name must be more than 2 charaters</div>
+                    errorLoginId && <div className='errorText'> User name must be minimum than 2 charaters</div>
                   }
                   <br />
 
@@ -223,23 +172,7 @@ class Login extends PureComponent {
                     style={{
                       display: 'inline-flex',
                       textAlign: 'center',
-                    }}>
-                    {/* <button
-                      type='submit'
-                      variant='contained'
-                      color='#e41e26'
-                      size='large'
-                      className='mob-button'
-                      style={{
-                        backgroundColor: '#e41e26',
-                        color: '#ffffff',
-                        textAlign: 'center',
-                        textTransform: 'capitalize',
-                        fontWeight: 'bold'
-                      }}
-                      disabled={this.state.isButtonDisabled}>
-                      <span className='mob-text'> Submit </span>
-                    </button> */}
+                    }}>                    
                     <Button
                       variant='contained'
                       color='secondary'
@@ -256,14 +189,7 @@ class Login extends PureComponent {
                       }}
                       className = 'setColor'>
                       Submit
-                    </Button>
-                    {/* <span className='circularLoader'>
-                      {' '}
-                      {this.props.error == null &&
-                        this.state.isButtonDisabled && (
-                          <CircularProgressBar />
-                        )}{' '}
-                    </span> */}
+                    </Button>                    
                   </div>
 
                   <br />
@@ -271,18 +197,7 @@ class Login extends PureComponent {
                   <br />
                   <br />
                   <Grid container>
-                    <Grid item xs>
-                      {/* <LinkToForgotPassword
-                        className='forgotPasswordLink'
-                        to={{
-                          pathname: '/forgotPassword',
-                          state: { email: this.state.email },
-                        }}>
-                        {' '}
-                        Forgot Password?
-                      </LinkToForgotPassword>
-                      <br />
-                      <br /> */}
+                    <Grid item xs>                      
                       First time user?
                       <Link onClick={this.gotoRegistration}>
                         Register for Account
@@ -292,19 +207,9 @@ class Login extends PureComponent {
                 </form>
               </div>
             </Container>
-          </Grid>
-          {/* <Hidden mdDown>
-            <Grid
-              item
-              lg={7}
-              md={12}
-              className='MuiContainer-root align-center img-set set-border full-height'
-              style={{ backgroundImage: `url(${loginimgg})` }}
-            />
-          </Hidden> */}
+          </Grid>          
         </Grid>
-        <Grid>
-          {/* <Footer /> */}
+        <Grid>          
         </Grid>
       </Grid>
     );

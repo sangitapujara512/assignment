@@ -1,13 +1,15 @@
+import { SET_REGISTRATION } from '../constants';
+
 const initialState = {
-  test: [],
+  registration: [],
 };
 
 export default function setBrowserInfo(state = initialState, action) {
   switch (action.type) {
-    case 'SET_TEST':
+    case SET_REGISTRATION:
       return {
         ...state,
-        test: action.payload,
+        registration: action.payload,
       };
     default:
       return state;
